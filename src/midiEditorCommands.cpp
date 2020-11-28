@@ -861,6 +861,7 @@ void cmdMidiMoveToTrack(Command* command) {
 
 void cmdMidiMoveEventLeftPixelFocus(Command* command) {
 	HWND editor = MIDIEditor_GetActive();
+	isHandlingCommand = false;
 	switch (fakeFocus) {
 		case FOCUS_NOTE:
 			MIDIEditor_OnCommand(editor, 40181); // Edit: Move notes left one pixel
@@ -871,10 +872,12 @@ void cmdMidiMoveEventLeftPixelFocus(Command* command) {
 		default:
 			break;
 	}
+	isHandlingCommand = true;
 }
 
 void cmdMidiMoveEventRightPixelFocus(Command* command) {
 	HWND editor = MIDIEditor_GetActive();
+	isHandlingCommand = false;
 	switch (fakeFocus) {
 		case FOCUS_NOTE:
 			MIDIEditor_OnCommand(editor, 40182); // Edit: Move notes right one pixel
@@ -885,10 +888,12 @@ void cmdMidiMoveEventRightPixelFocus(Command* command) {
 		default:
 			break;
 	}
+	isHandlingCommand = true;
 }
 
 void cmdMidiMoveEventLeftGridFocus(Command* command) {
 	HWND editor = MIDIEditor_GetActive();
+	isHandlingCommand = false;
 	switch (fakeFocus) {
 		case FOCUS_NOTE:
 			MIDIEditor_OnCommand(editor, 40183); // Edit: Move notes left one grid unit
@@ -899,10 +904,12 @@ void cmdMidiMoveEventLeftGridFocus(Command* command) {
 		default:
 			break;
 	}
+	isHandlingCommand = true;
 }
 
 void cmdMidiMoveEventRightGridFocus(Command* command) {
 	HWND editor = MIDIEditor_GetActive();
+	isHandlingCommand = false;
 	switch (fakeFocus) {
 		case FOCUS_NOTE:
 			MIDIEditor_OnCommand(editor, 40184); // Edit: Move notes right one grid unit
@@ -913,6 +920,7 @@ void cmdMidiMoveEventRightGridFocus(Command* command) {
 		default:
 			break;
 	}
+	isHandlingCommand = true;
 }
 
 void cmdMidiSelectSamePitchStartingInTimeSelection(Command* command) {
@@ -1150,11 +1158,11 @@ void postMidiChangePitch(int command) {
 			case 40178:
 				s << "semitone down";
 				break;
+			case 40179:
+				s << "octave up";
+				break;
 			case 40180:
 				s << "octave down";
-				break;
-			case 40181:
-				s << "octave up";
 				break;
 			case 41026:
 				s << "semitone up ignoring scale";
