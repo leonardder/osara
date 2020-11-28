@@ -859,6 +859,62 @@ void cmdMidiMoveToTrack(Command* command) {
 	outputMessage(s);
 }
 
+void cmdMidiMoveEventLeftPixelFocus(Command* command) {
+	HWND editor = MIDIEditor_GetActive();
+	switch (fakeFocus) {
+		case FOCUS_NOTE:
+			MIDIEditor_OnCommand(editor, 40181); // Edit: Move notes left one pixel
+			break;
+		case FOCUS_CC:
+			MIDIEditor_OnCommand(editor, 40672); // Edit: Move CC events left 1 pixel
+			break;
+		default:
+			break;
+	}
+}
+
+void cmdMidiMoveEventRightPixelFocus(Command* command) {
+	HWND editor = MIDIEditor_GetActive();
+	switch (fakeFocus) {
+		case FOCUS_NOTE:
+			MIDIEditor_OnCommand(editor, 40182); // Edit: Move notes right one pixel
+			break;
+		case FOCUS_CC:
+			MIDIEditor_OnCommand(editor, 40673); // Edit: Move CC events right 1 pixel
+			break;
+		default:
+			break;
+	}
+}
+
+void cmdMidiMoveEventLeftGridFocus(Command* command) {
+	HWND editor = MIDIEditor_GetActive();
+	switch (fakeFocus) {
+		case FOCUS_NOTE:
+			MIDIEditor_OnCommand(editor, 40183); // Edit: Move notes left one grid unit
+			break;
+		case FOCUS_CC:
+			MIDIEditor_OnCommand(editor, 40674); // Edit: Move CC events left by grid
+			break;
+		default:
+			break;
+	}
+}
+
+void cmdMidiMoveEventRightGridFocus(Command* command) {
+	HWND editor = MIDIEditor_GetActive();
+	switch (fakeFocus) {
+		case FOCUS_NOTE:
+			MIDIEditor_OnCommand(editor, 40184); // Edit: Move notes right one grid unit
+			break;
+		case FOCUS_CC:
+			MIDIEditor_OnCommand(editor, 40675); // Edit: Move CC events right by grid
+			break;
+		default:
+			break;
+	}
+}
+
 void cmdMidiSelectSamePitchStartingInTimeSelection(Command* command) {
 	double tsStart,tsEnd;
 	GetSet_LoopTimeRange(false, false, &tsStart, &tsEnd, false);
@@ -1202,6 +1258,44 @@ void postMidiChangeCCValue(int command) {
 		}
 	} else{ 
 		auto cc = *selectedCCs.cbegin();
+		s << cc.value;
+	}
+	outputMessage(s);
+}
+
+void postMidiMoveCC(int command) {
+	HWND editor = MIDIEditor_GetActive();
+	MediaItem_Take* take = MIDIEditor_GetTake(editor);
+	// Get selected CCs.
+	vector<MidiControlChange> selectedCCs = getSelectedCCs(take);
+	auto count = selectedCCs.size();
+	if (count == 0) {
+		return;
+	}
+	ostringstream s;
+	if (count > 1) {
+		s << count << " control values ";
+		switch (command) {
+			case 40672:
+				s << "pixel left";
+				break;
+			case 40673:
+				s << "pixel right";
+				break;
+			case 40674:
+				s << "grid unit left";
+				break;
+			case 40675:
+				s << "grid unit right";
+				break;				
+			default:
+				s << "moved";
+				break;
+		}
+	} else{ 
+		auto cc = *selectedCCs.cbegin();
+		s << formatTime(cc.position, TF_MEASURE) << " ";
+		s << getMidiControlName(take, cc.control, cc.channel) << ", ";
 		s << cc.value;
 	}
 	outputMessage(s);

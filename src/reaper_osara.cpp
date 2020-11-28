@@ -1539,6 +1539,10 @@ PostCommand MIDI_POST_COMMANDS[] = {
 	{40464, postMidiChangeVelocity}, // Edit: Note velocity -01
 	{40465, postMidiChangeVelocity}, // Edit: Note velocity -10
 	{40501, postMidiSelectNotes}, // Invert selection
+	{40672, postMidiMoveCC}, // Edit: Move CC events left 1 pixel
+	{40673, postMidiMoveCC}, // Edit: Move CC events right 1 pixel
+	{40674, postMidiMoveCC}, // Edit: Move CC events left by grid
+	{40675, postMidiMoveCC}, // Edit: Move CC events right by grid
 	{40676, postMidiChangeCCValue}, // Edit: Increase value a little bit for CC events
 	{40677, postMidiChangeCCValue}, // Edit: Decrease value a little bit for CC events
 	{40746, postMidiSelectNotes}, // Edit: Select all notes in time selection
@@ -3157,6 +3161,10 @@ Command COMMANDS[] = {
 	{MIDI_EDITOR_SECTION, {DEFACCEL, "OSARA: Move to previous midi item on track"}, "OSARA_MIDIPREVITEM", cmdMidiMoveToPrevItem},
 	{MIDI_EDITOR_SECTION, {DEFACCEL, "OSARA: Move to next midi item on track"}, "OSARA_MIDINEXTITEM", cmdMidiMoveToNextItem},
 	{MIDI_EDITOR_SECTION, {DEFACCEL, "OSARA: Select all notes with the same pitch starting in time selection"}, "OSARA_SELSAMEPITCHTIMESEL", cmdMidiSelectSamePitchStartingInTimeSelection},
+	{MIDI_EDITOR_SECTION, {DEFACCEL, "OSARA: Move Note/CC (depending on focus) left one pixel"}, "OSARA_MIDIEVENTFOCUSLEFTPIXEL", cmdMidiMoveEventLeftPixelFocus},
+	{MIDI_EDITOR_SECTION, {DEFACCEL, "OSARA: Move Note/CC (depending on focus) right one pixel"}, "OSARA_MIDIEVENTFOCUSRIGHTPIXEL", cmdMidiMoveEventRightPixelFocus},
+	{MIDI_EDITOR_SECTION, {DEFACCEL, "OSARA: Move Note/CC (depending on focus) left one grid unit"}, "OSARA_MIDIEVENTFOCUSLEFTGRID", cmdMidiMoveEventLeftGridFocus},
+	{MIDI_EDITOR_SECTION, {DEFACCEL, "OSARA: Move Note/CC (depending on focus) right one grid unit"}, "OSARA_MIDIEVENTFOCUSRIGHTGRID", cmdMidiMoveEventRightGridFocus},
 #ifdef _WIN32
 	{MIDI_EVENT_LIST_SECTION, {DEFACCEL, "OSARA: Focus event nearest edit cursor"}, "OSARA_FOCUSMIDIEVENT", cmdFocusNearestMidiEvent},
 #endif

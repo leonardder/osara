@@ -29,6 +29,10 @@ void cmdMidiMoveToPreviousCCKeepSel(Command* command);
 void cmdMidiMoveToNextItem(Command* command) ;
 void cmdMidiMoveToPrevItem(Command* command) ;
 void cmdMidiMoveToTrack(Command* command);
+void cmdMidiMoveEventLeftPixelFocus(Command* command);
+void cmdMidiMoveEventRightPixelFocus(Command* command);
+void cmdMidiMoveEventLeftGridFocus(Command* command);
+void cmdMidiMoveEventRightGridFocus(Command* command);
 void cmdMidiSelectSamePitchStartingInTimeSelection(Command* command) ;
 #ifdef _WIN32
 void cmdFocusNearestMidiEvent(Command* command);
@@ -40,4 +44,5 @@ void postMidiChangeLength(int command);
 void postMidiChangePitch(int command);
 void postMidiMoveStart(int command);
 void postMidiChangeCCValue(int command);
+void postMidiMoveCC(int command);
 void postMidiSwitchCCLane(int command);
